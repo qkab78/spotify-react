@@ -1,8 +1,14 @@
-import { createAction } from "@reduxjs/toolkit"
+import { createAsyncThunk } from "@reduxjs/toolkit"
+import { AlbumsState } from "../../album-slice"
 
+export interface IAlbumResponse {
+  id: string
+  name: string
+}
 
-const retireveAlbumList = createAction<{
-  albums: Array<{ id: string, name: string }>
-}>('albums/retireveAlbumList')
+const retireveAlbumList = createAsyncThunk<{ albums: AlbumsState }, void, { extra: { existingAlbums: Array<IAlbumResponse>}}>('albums/retireveAlbumList', async (
+  _,{ extra: { existingAlbums } }) => {
+    return { albums: existingAlbums }
+  })
 
 export { retireveAlbumList }

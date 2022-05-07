@@ -1,9 +1,9 @@
 import { selectors, useCases } from ".."
 import { createStore } from "../../../store"
-import { AlbumsState } from "../../album-slice"
+import { IAlbumResponse } from "../../use-cases"
 
 interface SUTProps {
-  albums?: AlbumsState
+  albums?: IAlbumResponse[]
 }
 
 const retrieveAlbumListSUT = (props: SUTProps = {}) => {
@@ -14,15 +14,13 @@ const retrieveAlbumListSUT = (props: SUTProps = {}) => {
         albums: []
       })
     },
-    withAlbums(albums: AlbumsState) {
+    withAlbums(albums: IAlbumResponse[]) {
       return retrieveAlbumListSUT({ ...props, albums })
     },
     build(){
-      const store = createStore()
+      const store = createStore({ existingAlbums: props.albums })
       const selectAllAlbums = () => selectors.selectAllAlbums(store.getState())
-      const retireveAlbumList = () => store.dispatch(useCases.retireveAlbumList({
-        albums: props.albums || []
-      }))
+      const retireveAlbumList = () => store.dispatch(useCases.retireveAlbumList())
 
       return { selectAllAlbums, retireveAlbumList }
     }

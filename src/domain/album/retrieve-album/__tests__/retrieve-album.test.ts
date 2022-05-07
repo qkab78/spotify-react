@@ -10,7 +10,7 @@ describe('retrieve a list of albums', () => {
     expect(selectAllAlbums()).toEqual({ albums: [] })
   })
 
-  test('should return a list of album', () => {
+  test('should return a list of album', async () => {
     // arrange ==> préparation du store
     const { selectAllAlbums, retireveAlbumList } = retrieveAlbumListSUT()
       .withAlbums([
@@ -19,9 +19,8 @@ describe('retrieve a list of albums', () => {
       ])
       .build()
     // act ==> dispatch une action
-    retireveAlbumList()
+    await retireveAlbumList()
     // assert ==> selector = expected
-    // const EXPECTED_ALBUMS = [FIRST_ALBUM, SECOND_ALBUM]
     const EXPECTED_ALBUMS = [
       { id: 'id1', name: 'album1' },
       { id: 'id2', name: 'album2' },

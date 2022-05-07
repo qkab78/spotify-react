@@ -1,17 +1,17 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { albumsSlice } from './album/album-slice'
-import { IAlbumResponse } from './album/use-cases'
+import { AlbumListQuery } from './album/use-cases/queries/retrieve-album.query'
 
 const rootReducer = combineReducers({
   [albumsSlice.name]: albumsSlice.reducer
 })
 
-const createStore = ({ existingAlbums = [] }: { existingAlbums?: IAlbumResponse[] }) => {
+const createStore = ({ albumListQuery }: { albumListQuery: AlbumListQuery }) => {
   const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       thunk: {
-        extraArgument: { existingAlbums }
+        extraArgument: { albumListQuery }
       }
     })
   })

@@ -1,5 +1,6 @@
 import { selectors, useCases } from ".."
 import { createStore } from "../../../store"
+import { createInMemoryQuestionListQuery } from "../../adapters/album-list-query/in-memory"
 import { IAlbumResponse } from "../../use-cases"
 
 interface SUTProps {
@@ -18,7 +19,8 @@ const retrieveAlbumListSUT = (props: SUTProps = {}) => {
       return retrieveAlbumListSUT({ ...props, albums })
     },
     build(){
-      const store = createStore({ existingAlbums: props.albums })
+      const albumListQuery = createInMemoryQuestionListQuery({ existingAlbums: props.albums })
+      const store = createStore({ albumListQuery })
       const selectAllAlbums = () => selectors.selectAllAlbums(store.getState())
       const retireveAlbumList = () => store.dispatch(useCases.retireveAlbumList())
 

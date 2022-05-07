@@ -1,19 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createEntityAdapter, createSlice } from "@reduxjs/toolkit"
 import { retireveAlbumList } from "./use-cases"
 
-type AlbumsState = Array<{
+export interface IAlbum {
   id: string;
   name: string;
-}>
+}
 enum ALBUM_SLICE { NAME = 'albums' }
 
-const initialState = [] as AlbumsState
+const albumEntityAdapter = createEntityAdapter<IAlbum>()
+
 
 const albumsSlice = createSlice({
   name: ALBUM_SLICE.NAME,
-  initialState,
+  initialState: albumEntityAdapter.getInitialState(),
   reducers: {},
-  extraReducers: (builder) => builder.addCase(retireveAlbumList, (state, action) => action.payload.albums)
+  extraReducers: (builder) => builder.addCase(retireveAlbumList, (state, action) => {
+    albumEntityAdapter.setAll(state , action.payload.albums)
+  })
 })
 
-export { albumsSlice, ALBUM_SLICE }
+export type AlbumsState = Array<IAlbum>
+export { albumsSlice, ALBUM_SLICE, albumEntityAdapter }

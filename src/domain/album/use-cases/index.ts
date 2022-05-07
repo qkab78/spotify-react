@@ -1,1 +1,1 @@
-export * from './retrieve-album.use-case'
+export * from './retrieve-album'

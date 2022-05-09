@@ -43,7 +43,17 @@ describe('retrieve a list of albums', () => {
       { id: 'id3', name: 'album 3'},
     ] })
   })
-  test.todo('should remove an album from the list')
+  test('should remove an album from the list', async () => {
+    const { selectAllAlbums, retrieveAlbumList, removeAlbumFromTheList } = retrieveAlbumListSUT()
+      .withAlbums([{ id: 'id1', name: 'album 1'}, { id: 'id2', name: 'album 2'}])
+      .build()
+
+    await retrieveAlbumList()
+    await removeAlbumFromTheList('id1')
+
+    expect(selectAllAlbums().albums).toHaveLength(1)
+    expect(selectAllAlbums()).toEqual({ albums: [{ id: 'id2', name: 'album 2' }] })
+  })
   test.todo('should remove multiple albums from the list')
 })
 export {}

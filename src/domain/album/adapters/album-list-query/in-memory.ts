@@ -7,7 +7,8 @@ type IInMemoryAlbumListQuery = {
 
 const createInMemoryAlbumListQuery = ({ existingAlbums = [] }: IInMemoryAlbumListQuery): AlbumListQuery => async () => ({
   getAllAlbums: async () => ({ albums: existingAlbums }),
-  addAlbumToTheList: async (album: IAlbumResponse) => (album)
+  addAlbumToTheList: async (album: IAlbumResponse) => (album),
+  removeAlbumFromTheList: async (albumId: string) => albumId
 })
 
 

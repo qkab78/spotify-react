@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice, current } from "@reduxjs/toolkit"
 import { IAlbum } from "./entities/album"
-import { retrieveAlbumList, saveAlbumToTheList } from "./use-cases"
+import { removeAlbumFromTheList, retrieveAlbumList, saveAlbumToTheList } from "./use-cases"
 
 enum ALBUM_SLICE { NAME = 'albums' }
 
@@ -13,12 +13,8 @@ const albumsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => builder
     .addCase(retrieveAlbumList.fulfilled, (state, action) => albumEntityAdapter.setAll(state, action.payload.albums))
-    .addCase(saveAlbumToTheList.fulfilled, (state, action) => {
-      console.log(action, current(state.entities))
-      if(action.payload) {
-        albumEntityAdapter.addOne(state, action.payload)
-      }
-    })
+    .addCase(saveAlbumToTheList.fulfilled, (state, action) => albumEntityAdapter.addOne(state, action.payload))
+    .addCase(removeAlbumFromTheList.fulfilled, (state, action) => albumEntityAdapter.removeOne(state, action.payload))
 })
 
 export type AlbumsState = Array<IAlbum>

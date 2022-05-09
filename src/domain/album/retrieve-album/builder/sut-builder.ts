@@ -33,8 +33,9 @@ const retrieveAlbumListSUT = (props: SUTProps = {}) => {
       const selectAllAlbums = () => selectors.selectAllAlbums(store.getState())
       const retrieveAlbumList = () => store.dispatch(useCases.retrieveAlbumList())
       const saveAlbumToTheList = (newAlbum: IAlbumResponse) => store.dispatch(useCases.saveAlbumToTheList(newAlbum))
+      const removeAlbumFromTheList = (albumId: string) => store.dispatch(useCases.removeAlbumFromTheList(albumId))
 
-      return { selectAllAlbums, retrieveAlbumList, saveAlbumToTheList }
+      return { selectAllAlbums, retrieveAlbumList, saveAlbumToTheList, removeAlbumFromTheList }
     }
   }
 }

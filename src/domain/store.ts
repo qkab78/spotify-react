@@ -1,17 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { albumsSlice } from './album/album-slice'
-import { AlbumListQuery, SaveAlbumToTheListQuery } from './album/use-cases/queries/album.query'
+import { AlbumListQuery } from './album/use-cases/queries/album.query'
 
 const rootReducer = combineReducers({
   [albumsSlice.name]: albumsSlice.reducer
 })
-type CreatedStore = {
-  albumListQuery: AlbumListQuery
-  saveAlbumToTheListQuery: SaveAlbumToTheListQuery
-}
 
-const createStore = ({ albumListQuery, saveAlbumToTheListQuery }: CreatedStore) => {
-  const extraArgument = { albumListQuery, saveAlbumToTheListQuery }
+const createStore = ({ albumListQuery }: { albumListQuery: AlbumListQuery }) => {
+  const extraArgument = { albumListQuery }
 
   const store = configureStore({
     reducer: rootReducer,
@@ -19,8 +15,6 @@ const createStore = ({ albumListQuery, saveAlbumToTheListQuery }: CreatedStore) 
       thunk: { extraArgument }
     })
   })
-
-  console.log('STORE ===> ', store.getState());
   
   return store
 }

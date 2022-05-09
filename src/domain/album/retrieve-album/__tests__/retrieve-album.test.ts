@@ -26,7 +26,7 @@ describe('retrieve a list of albums', () => {
     expect(selectAllAlbums()).toEqual({ albums: EXPECTED_ALBUMS })
   })
 
-  test.only('should save an album to the list', async () => {
+  test('should save an album to the list', async () => {
     // Arrange ==> préparation du store
     const { selectAllAlbums, retrieveAlbumList, saveAlbumToTheList } = retrieveAlbumListSUT()
       .withAlbums([{ id: 'id1', name: 'album 1'}, { id: 'id2', name: 'album 2'}])

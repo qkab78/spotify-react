@@ -1,10 +1,11 @@
 import { selectors, useCases } from ".."
 import { createStore } from "../../../store"
-import { createInMemoryAlbumListQuery } from "../../adapters/album-list-query/in-memory"
+import { createInMemoryAlbumListQuery, createInMemorySaveAlbumToTheListQuery } from "../../adapters/album-list-query/in-memory"
 import { IAlbumResponse } from "../../use-cases"
 
 interface SUTProps {
   albums?: IAlbumResponse[]
+  newAlbum?: IAlbumResponse
 }
 
 const retrieveAlbumListSUT = (props: SUTProps = {}) => {
@@ -18,13 +19,23 @@ const retrieveAlbumListSUT = (props: SUTProps = {}) => {
     withAlbums(albums: IAlbumResponse[]) {
       return retrieveAlbumListSUT({ ...props, albums })
     },
-    build(){
+    addAlbum(album: IAlbumResponse) {
+      return retrieveAlbumListSUT({ ...props, newAlbum: album })
+    },
+    build(){      
       const albumListQuery = createInMemoryAlbumListQuery({ existingAlbums: props.albums })
-      const store = createStore({ albumListQuery })
-      const selectAllAlbums = () => selectors.selectAllAlbums(store.getState())
-      const retireveAlbumList = () => store.dispatch(useCases.retireveAlbumList())
+      const saveAlbumToTheListQuery = createInMemorySaveAlbumToTheListQuery(props.newAlbum)
 
-      return { selectAllAlbums, retireveAlbumList }
+      console.log('build ====>', props)
+      
+      const store = createStore({ albumListQuery, saveAlbumToTheListQuery })
+      
+      console.log('store created ====>', store.getState())
+      const selectAllAlbums = () => selectors.selectAllAlbums(store.getState())
+      const retrieveAlbumList = () => store.dispatch(useCases.retrieveAlbumList())
+      const saveAlbumToTheList = (newAlbum: IAlbumResponse) => store.dispatch(useCases.saveAlbumToTheList(newAlbum))
+
+      return { selectAllAlbums, retrieveAlbumList, saveAlbumToTheList }
     }
   }
 }

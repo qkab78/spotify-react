@@ -1,15 +1,22 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { AlbumsState } from "../../album-slice"
-import { AlbumListQuery } from "../queries/retrieve-album.query"
+import { AlbumListQuery, SaveAlbumToTheListQuery } from "../queries/album.query"
 
 export interface IAlbumResponse {
   id: string
   name: string
 }
 
-const retireveAlbumList = createAsyncThunk<{ albums: AlbumsState }, void, { extra: { albumListQuery: AlbumListQuery }}>('albums/retireveAlbumList', async (
-  _,{ extra: { albumListQuery } }) => {
-    return albumListQuery()
-  })
+const retrieveAlbumList = createAsyncThunk<{ albums: AlbumsState }, void, { extra: { albumListQuery: AlbumListQuery }}>(
+  'albums/retrieveAlbumList',
+  async (_,{ extra: { albumListQuery } }) => albumListQuery()
+)
 
-export { retireveAlbumList }
+const saveAlbumToTheList = createAsyncThunk<IAlbumResponse | undefined, IAlbumResponse, { extra: { saveAlbumToTheListQuery: SaveAlbumToTheListQuery }}>(
+  'albums/saveAlbumToTheList',
+  async (album, { extra: { saveAlbumToTheListQuery } }) => saveAlbumToTheListQuery(album)
+)
+
+// const saveAlbumToTheList = createAsyncThunk<{ album: IAlbumResponse }, void, { extra: { saveAlbumToTheListQuery: SaveAlbumToTheListQuery }}>('albums/saveAlbumToTheList', async (_,{ extra: { saveAlbumToTheListQuery } }) => saveAlbumToTheListQuery())
+
+export { retrieveAlbumList, saveAlbumToTheList }

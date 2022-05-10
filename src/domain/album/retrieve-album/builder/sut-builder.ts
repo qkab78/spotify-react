@@ -1,4 +1,5 @@
 import { selectors, useCases } from ".."
+import { createInMemoryAuthQuery } from "../../../auth/adapters/auth-query/in-memory"
 import { createStore } from "../../../store"
 import { createInMemoryAlbumListQuery } from "../../adapters/album-list-query/in-memory"
 import { IAlbumResponse } from "../../use-cases"
@@ -24,8 +25,9 @@ const retrieveAlbumListSUT = (props: SUTProps = {}) => {
     },
     build(){      
       const albumListQuery = createInMemoryAlbumListQuery({ existingAlbums: props.albums })
+      const authQuery = createInMemoryAuthQuery()
       
-      const store = createStore({ albumListQuery })
+      const store = createStore({ albumListQuery, authQuery })
       
       const selectAllAlbums = () => selectors.selectAllAlbums(store.getState())
       const retrieveAlbumList = () => store.dispatch(useCases.retrieveAlbumList())

@@ -10,4 +10,5 @@ export type AlbumListQuery = () => Promise<{
   getAllAlbums: () => Promise<AlbumListResult>
   addAlbumToTheList: (album: IAlbumResponse) => Promise<SaveAlbumToTheListResult>
   removeAlbumFromTheList: (albumId: string) => Promise<string>
+  removeAlbumsFromTheList: (albumIds: string []) => Promise<string[]>
 }>

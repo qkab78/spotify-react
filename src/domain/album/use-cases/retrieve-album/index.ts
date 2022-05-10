@@ -31,4 +31,12 @@ const removeAlbumFromTheList = createAsyncThunk<string, string, { extra: { album
   }
 )
 
-export { retrieveAlbumList, saveAlbumToTheList, removeAlbumFromTheList }
+const removeAlbumsFromTheList = createAsyncThunk<string[], string[], { extra: { albumListQuery: AlbumListQuery }}>(
+  'albums/removeAlbumsFromTheList',
+  async (albumIds: string[], { extra: { albumListQuery } }) => {
+    const { removeAlbumsFromTheList } = await albumListQuery()
+    return removeAlbumsFromTheList(albumIds)
+  }
+)
+
+export { retrieveAlbumList, saveAlbumToTheList, removeAlbumFromTheList, removeAlbumsFromTheList }

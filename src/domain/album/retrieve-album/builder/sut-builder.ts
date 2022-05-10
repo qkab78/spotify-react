@@ -24,18 +24,16 @@ const retrieveAlbumListSUT = (props: SUTProps = {}) => {
     },
     build(){      
       const albumListQuery = createInMemoryAlbumListQuery({ existingAlbums: props.albums })
-
-      console.log('build ====>', props)
       
       const store = createStore({ albumListQuery })
       
-      console.log('store created ====>', store.getState())
       const selectAllAlbums = () => selectors.selectAllAlbums(store.getState())
       const retrieveAlbumList = () => store.dispatch(useCases.retrieveAlbumList())
       const saveAlbumToTheList = (newAlbum: IAlbumResponse) => store.dispatch(useCases.saveAlbumToTheList(newAlbum))
       const removeAlbumFromTheList = (albumId: string) => store.dispatch(useCases.removeAlbumFromTheList(albumId))
+      const removeAlbumsFromTheList = (albumIds: string[]) => store.dispatch(useCases.removeAlbumsFromTheList(albumIds))
 
-      return { selectAllAlbums, retrieveAlbumList, saveAlbumToTheList, removeAlbumFromTheList }
+      return { selectAllAlbums, retrieveAlbumList, saveAlbumToTheList, removeAlbumFromTheList, removeAlbumsFromTheList }
     }
   }
 }

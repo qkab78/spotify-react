@@ -13,5 +13,6 @@ export type IAuth = {
 
 export type Auth = {
   accessToken: string,
+  refreshToken: string,
   isAuthenticated: boolean
 }

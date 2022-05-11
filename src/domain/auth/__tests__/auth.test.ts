@@ -6,7 +6,7 @@ describe('Authentication flow', () => {
 
     const SCOPE = 'user-read-private user-read-email'
     const CLIENT_ID = 'CLIENT_ID'
-    const REDIRECT_URI = 'REDIRECT_URI/callback'
+    const REDIRECT_URI = `${process.env.REACT_APP_SPOTIFY_URL}/callback`
     const STATE = 'STATE'
     const SPOTIFY_URL = `${process.env.REACT_APP_SPOTIFY_URL}/authorize`
 
@@ -21,7 +21,8 @@ describe('Authentication flow', () => {
       }
     })
 
-    expect(selectAuthInfos().authInfos.accessToken).toBeDefined()
+    expect(selectAuthInfos().authInfos.accessToken).toEqual('access_token')
+    expect(selectAuthInfos().authInfos.refreshToken).toEqual('refresh_token')
     expect(selectAuthInfos().authInfos.isAuthenticated).toBeTruthy()
   })
 })

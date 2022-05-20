@@ -5,7 +5,7 @@ import { authenticateUser } from "./use-cases";
 
 enum AUTH_SLICE { NAME = 'auth' }
 
-const initialState: Auth = { isAuthenticated: false, accessToken: '', refreshToken: '' };
+export const initialState: Auth = { isAuthenticated: false, accessToken: '', refreshToken: '' };
 
 
 const authSlice = createSlice({

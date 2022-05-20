@@ -11,10 +11,11 @@ const rootReducer = combineReducers({
 
 export type CreatedStore = {
   albumListQuery: AlbumListQuery,
-  authQuery: AuthQuery
+  authQuery: AuthQuery,
+  preloadedState?: RootState
 }
 
-const createStore = ({ albumListQuery, authQuery }: CreatedStore) => {
+const createStore = ({ albumListQuery, authQuery, preloadedState }: CreatedStore) => {
   const extraArgument = { albumListQuery, authQuery }
 
   const store = configureStore({
@@ -22,12 +23,14 @@ const createStore = ({ albumListQuery, authQuery }: CreatedStore) => {
     devTools: process.env.NODE_ENV !== 'production',
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       thunk: { extraArgument }
-    })
+    }),
+    preloadedState
   })
-  
+     
   return store
 }
 
+export type AppDispatch = ReturnType<typeof createStore>['dispatch']
 export type RootState = ReturnType<typeof rootReducer>
 
 export { createStore }

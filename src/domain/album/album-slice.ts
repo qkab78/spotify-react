@@ -5,11 +5,11 @@ import { removeAlbumFromTheList, removeAlbumsFromTheList, retrieveAlbumList, sav
 enum ALBUM_SLICE { NAME = 'albums' }
 
 const albumEntityAdapter = createEntityAdapter<IAlbum>()
-
+export const initialState = albumEntityAdapter.getInitialState()
 
 const albumsSlice = createSlice({
   name: ALBUM_SLICE.NAME,
-  initialState: albumEntityAdapter.getInitialState(),
+  initialState,
   reducers: {},
   extraReducers: (builder) => builder
     .addCase(retrieveAlbumList.fulfilled, (state, action) => albumEntityAdapter.setAll(state, action.payload.albums))
